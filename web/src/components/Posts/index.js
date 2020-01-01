@@ -1,110 +1,100 @@
 import React from "react";
-import { Grid, Typography,ListItem } from "@material-ui/core";
+import AddNewPost from '../AddNewPost/index'
+import { Typography } from "@material-ui/core";
 import Card from "@material-ui/core/Card";
-import CardActionArea from "@material-ui/core/CardActionArea";
 import CardActions from "@material-ui/core/CardActions";
 import CardContent from "@material-ui/core/CardContent";
 import CardMedia from "@material-ui/core/CardMedia";
 import Button from "@material-ui/core/Button";
-import {posts} from "../../dummy-post";
-import {
-  AutoSizer,
-  List,
-  CellMeasurer,
-  CellMeasurerCache,
-} from 'react-virtualized';
+import { List } from "react-virtualized";
+import { withStyles } from '@material-ui/core/styles';
 
-export default class Posts extends React.Component {
+const styles  = {   
+    card: {
+        width: '75%',
+        display: 'flex',
+        height: '250px',
+        margin: 'auto',
+    },
+    details: {
+        display: 'flex',
+        flexDirection: 'column',
+    },
+    content: {
+        flex: '1 0 auto',
+    },
+    cover: {
+        minWidth: 270,
+    },
+};
 
+const height = 700;
+const rowHeight = 250;
+const width = 1050;
 
-  renderRow = ({ index, isScrolling, key, style}) => {
-    console.log(this.props)
-    const { posts } =   this.props
-    return (
-      <div key={key} style={style}>
-        {/* <div>{this.props.posts[index].description}</div> */}
-        {/* <div>{this.props.data[index].email}</div> */}
-        <Card>
-              <CardActionArea>
+class Posts extends React.Component {
+
+    rowRenderer = ({ index, isScrolling, key, style }) => {
+        let { posts,classes } = this.props
+        posts = posts.reverse();
+        return (
+          <div key={key}>
+            <Card className={classes.card}>
                 <CardMedia
-                  component="img"
-                  alt="Contemplative Reptile"
-                  height="140"
-                  image={posts[index].data.media[0].image}
-                  // image={post.image}
-                  title="Contemplative Reptile"
+                    className={classes.cover}
+                    image={posts[index].data.media[0].image}
+                    title="Live from space album cover"
                 />
-                <CardContent>
-                  <Typography gutterBottom variant="h5" component="h2">
-                    {/* {post.data.media[0].description} */}
-                    {/* {post.description} */}
-                  </Typography>
-                  {/* <Typography component="p">{post.excerpt}</Typography> */}
-                </CardContent>
-              </CardActionArea>
-              <CardActions>
-                <Button size="small" color="primary">
-                  Share
-                </Button>
-                <Button size="small" color="primary">
-                  Learn More
-                </Button>
-              </CardActions>
+                <div className={classes.details}>
+                    <CardContent className={classes.content}>
+                        <Typography component="h5" variant="h5">
+                            {posts[index].data.media[0].description}
+                        </Typography>
+                        <Typography variant="subtitle1" color="textSecondary">
+                            {posts[index].description}...
+                        </Typography>
+                    </CardContent>
+                    <CardActions>
+                        <Button size="small" color="primary" onClick={() => this.props.getPost(posts[index].id)}>
+                            Edit Post
+                        </Button>
+                        <Button size="small" color="primary" onClick={() => this.props.deletePost(posts[index].id)}>
+                            Delete Post
+                        </Button>
+                    </CardActions>
+                </div>
             </Card>
-      </div>
-    )
-  }
-
-
-  render() {
-    return (
-    <List
-            rowCount={this.props.posts.length}
-            rowHeight={50} width={300} height={300}
-            rowRenderer={this.renderRow}
-          />        
-    );
-  }
+          </div>
+        );
+      };
+  
+    render(){
+        const { open,closePopup,currentTite,currentDesc,imagePreviewUrl,update,postId,updatePost,addNewPost, } = this.props
+        return (
+            <div style={{ padding: "80px 0 0 0" }}>   
+                <List
+                    rowCount={this.props.posts.length}
+                    width={width}
+                    height={height}
+                    rowHeight={rowHeight}
+                    rowRenderer={this.rowRenderer}
+                    overscanRowCount={3}
+                    style={{width:"100%"}}
+                /> 
+                <AddNewPost 
+                    open={open} 
+                    closePopup={closePopup}
+                    addNewPost = {addNewPost}
+                    currentTite = {currentTite}
+                    currentDesc = {currentDesc}
+                    imagePreviewUrl = {imagePreviewUrl}
+                    update = {update}
+                    postId = {postId}
+                    updatePost = {updatePost}
+                 />
+            </div>
+          );
+    }
 }
 
-// function Posts(props) {
-//     // const { posts } = props
-//   return (
-//     <div style={{ padding: 30 }}>
-//       <List container spacing={6} justify="center">
-//         {posts && posts.map((post,i) => (
-//           <ListItem key={i} xs={3}>
-            // <Card>
-            //   <CardActionArea>
-            //     <CardMedia
-            //       component="img"
-            //       alt="Contemplative Reptile"
-            //       height="140"
-            //       // image={post.data.media[0].image}
-            //       image={post.image}
-            //       title="Contemplative Reptile"
-            //     />
-            //     <CardContent>
-            //       <Typography gutterBottom variant="h5" component="h2">
-            //         {/* {post.data.media[0].description} */}
-            //         {post.description}
-            //       </Typography>
-            //       <Typography component="p">{post.excerpt}</Typography>
-            //     </CardContent>
-            //   </CardActionArea>
-            //   <CardActions>
-            //     <Button size="small" color="primary">
-            //       Share
-            //     </Button>
-            //     <Button size="small" color="primary">
-            //       Learn More
-            //     </Button>
-            //   </CardActions>
-            // </Card>
-//           </ListItem>
-//         ))}
-//       </List>
-//     </div>
-//   );
-// }
-
+export default withStyles(styles)(Posts);

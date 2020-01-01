@@ -62,11 +62,11 @@ fastify.post("/posts", async (request, reply) => {
 });
 
 fastify.get("/posts/:id", async (request, reply) =>
-  posts.find(post => post.id === request.params.id)
+  posts.find(post => post.id === Number(request.params.id))
 );
 
 fastify.put("/posts/:id", async (request, reply) => {
-  const postIndex = posts.findIndex(post => post.id === request.params.id);
+  const postIndex = posts.findIndex(post => post.id === Number(request.params.id));
   const post = posts[postIndex];
   const updatedPost = {
     ...post,
@@ -77,9 +77,9 @@ fastify.put("/posts/:id", async (request, reply) => {
 });
 
 fastify.delete("/posts/:id", async (request, reply) => {
-  const postIndex = posts.findIndex(post => post.id === request.params.id);
+  const postIndex = posts.findIndex(post => post.id === Number(request.params.id));
   posts.splice(postIndex, 1);
-  return;
+  return true;
 });
 
 fastify.post("/upload", async function(request, reply) {
@@ -91,7 +91,7 @@ fastify.post("/upload", async function(request, reply) {
     if (error) {
       return reply.code(500).send(error);
     }
-    console.log("upload completed");
+    // console.log("upload completed");
     reply.code(200).send({
       url: `http://localhost:3001/${filePath.replace("./", "")}`
     });
