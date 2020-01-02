@@ -64,13 +64,8 @@ export default class HomePage extends React.Component {
     updatePost = (data,id) => {
         axios.put("http://localhost:3001/posts/"+ id, data, {
         }).then(res => {
-            const postIndex = this.state.posts.findIndex(post => post.id === id);
-            let newPosts = [...this.state.posts]
-            newPosts[postIndex] = res.data
-            this.setState({
-               ...this.state.posts,
-                posts:newPosts
-            })
+            // this.setState({ posts: [...this.state.posts, res.data] })
+            // console.log(res.data)
         })
     }
 

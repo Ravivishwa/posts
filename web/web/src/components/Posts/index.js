@@ -36,6 +36,7 @@ class Posts extends React.Component {
 
     rowRenderer = ({ index, key, style }) => {
         let { posts,classes } = this.props
+        // posts = posts.reverse();
         return (
           <div key={key} style={style}>
             <Card className={classes.card}>
