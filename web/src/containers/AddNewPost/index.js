@@ -70,12 +70,6 @@ export default class AddNewPost extends React.Component{
         };
     }
 
-    //   componentWillMount(){
-    //     this.setState({
-    //         currentTite : this.props.currentTite
-    //     });
-    // }
-
     _handleSubmit(e) {
         e.preventDefault();
         const data = new FormData()
@@ -126,7 +120,7 @@ export default class AddNewPost extends React.Component{
             "description":this.state.description,
             "data":{
                 "media":[{
-                    "image":this.state.imageUrl,
+                    "image": this.state.imagePreviewUrl ? this.state.imagePreviewUrl:this.props.imagePreviewUrl,
                     "description":this.state.title}]
             }};
         this.props.updatePost(data,id);
