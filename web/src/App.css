@@ -68,25 +68,16 @@ h3 {
   text-align: center;
   width: 500px;
 }
-.card{
-  width: '65%';
-  display: 'flex';
-  height: '250px';
-  margin: 'auto';
-}
-
-.details{
-  display: 'flex';
-  flex-direction: 'column';
-}
-.content{
-  flex: '1 0 auto';
-}
-.cover {
-  min-width: 170;
-}
 
 .ReactVirtualized__Grid__innerScrollContainer{
-  left: 13%;
+  margin:auto
+}
+
+#root {
+  height: 100vh;
+}
+
+.row {
+  padding: 20px 0;
 }
 

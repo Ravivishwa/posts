@@ -9,7 +9,7 @@ import Button from "@material-ui/core/Button";
 import { List } from "react-virtualized";
 import { withStyles } from '@material-ui/core/styles';
 
-const styles  = {   
+const styles  = {
     card: {
         width: '75%',
         display: 'flex',
@@ -28,22 +28,22 @@ const styles  = {
     },
 };
 
-const height = 700;
-const rowHeight = 250;
+const height = 850;
+const rowHeight = 270;
 const width = 1050;
 
 class Posts extends React.Component {
 
-    rowRenderer = ({ index, isScrolling, key, style }) => {
+    rowRenderer = ({ index, key, style }) => {
         let { posts,classes } = this.props
-        posts = posts.reverse();
+        // posts = posts.reverse();
         return (
-          <div key={key}>
+          <div key={key} style={style}>
             <Card className={classes.card}>
                 <CardMedia
                     className={classes.cover}
                     image={posts[index].data.media[0].image}
-                    title="Live from space album cover"
+                    title={posts[index].data.media[0].description}
                 />
                 <div className={classes.details}>
                     <CardContent className={classes.content}>
@@ -67,11 +67,11 @@ class Posts extends React.Component {
           </div>
         );
       };
-  
+
     render(){
         const { open,closePopup,currentTite,currentDesc,imagePreviewUrl,update,postId,updatePost,addNewPost, } = this.props
         return (
-            <div style={{ padding: "80px 0 0 0" }}>   
+            <div style={{ padding: "80px 0 0 0" }}>
                 <List
                     rowCount={this.props.posts.length}
                     width={width}
@@ -80,9 +80,9 @@ class Posts extends React.Component {
                     rowRenderer={this.rowRenderer}
                     overscanRowCount={3}
                     style={{width:"100%"}}
-                /> 
-                <AddNewPost 
-                    open={open} 
+                />
+                <AddNewPost
+                    open={open}
                     closePopup={closePopup}
                     addNewPost = {addNewPost}
                     currentTite = {currentTite}

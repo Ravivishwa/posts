@@ -56,26 +56,26 @@ export default class HomePage extends React.Component {
 
     addNewPost = (data) => {
         axios.post("http://localhost:3001/posts", data, {
-        }).then(res => { 
-            this.setState({ posts: [...this.state.posts, res.data] }) 
+        }).then(res => {
+            this.setState({ posts: [...this.state.posts, res.data] })
         })
     }
 
     updatePost = (data,id) => {
         axios.put("http://localhost:3001/posts/"+ id, data, {
-        }).then(res => { 
-            // this.setState({ posts: [...this.state.posts, res.data] }) 
-            console.log(res.data)
+        }).then(res => {
+            // this.setState({ posts: [...this.state.posts, res.data] })
+            // console.log(res.data)
         })
     }
 
     getPost = (id) => {
         this.openPopup()
-        let curentPost = this.state.posts.filter(x => x.id === id);
-        console.log(id)
+        // let curentPost = this.state.posts.filter(x => x.id === id);
+        // console.log(id)
         axios.get(`http://localhost:3001/posts/`+ id)
             .then((res) => {
-                this.setState({ 
+                this.setState({
                     currentTite:res.data.data.media[0].description,
                     currentDesc:res.data.description,
                     imagePreviewUrl:res.data.data.media[0].image,
@@ -105,9 +105,9 @@ export default class HomePage extends React.Component {
                 </AppBar>
                 {loading ?
                     <CircularProgress style={{position: 'absolute',top: '50%',left: '50%'}}/>
-                    : <Posts posts={posts} 
-                        deletePost = {this.deletePost} 
-                        open={this.state.open} 
+                    : <Posts posts={posts}
+                        deletePost = {this.deletePost}
+                        open={this.state.open}
                         getPost={this.getPost}
                         addNewPost = {this.addNewPost}
                         closePopup={this.closePopup}
